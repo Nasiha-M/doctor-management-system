@@ -1,0 +1,108 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin -- View Hospital Doctor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            color: #343a40;
+        }
+        header {
+            padding: 20px;
+            text-align: center;
+            background-color: #007bff;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: calc(33.333% - 20px); /* Three cards per row */
+            box-sizing: border-box;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .card h3 {
+            margin: 0 0 10px;
+            color: #007BFF;
+        }
+        .card p {
+            margin: 5px 0;
+        }
+        .no-results {
+            text-align: center;
+            font-weight: bold;
+            color: #dc3545;
+            width: 100%;
+        }
+        input[type="text"] {
+            padding: 10px;
+            margin: 10px 0;
+            width: calc(95% - 20px);
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background: linear-gradient(90deg, #28a745, #218838);
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+        input[type="submit"]:hover {
+            background: linear-gradient(90deg, #218838, #28a745);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>View Doctors</h1>
+    </header>
+    <form id="form1" name="form1" method="get" action="{% url 'search_place' %}">
+        <input type="text" name="textfield" id="place-search" placeholder="Search by Place" value="{{ search_query }}" />
+        <input type="submit" name="Submit" value="SEARCH" />
+    </form>
+
+    <div class="card-container">
+        {% if no_matches %}
+            <div class="no-results">No results found for "{{ search_query }}".</div>
+        {% else %}
+            {% for i in values %}
+            <div class="card">
+                <h3>{{ i.NAME }}</h3>
+                <p><strong>Place:</strong> {{ i.PLACE }}</p>
+                <p><strong>Phone:</strong> {{ i.PHONE }}</p>
+                <p><strong>Email:</strong> {{ i.EMAIL }}</p>
+                <a href="{% url 'view_doctor' hospital_id=i.id %}" style="color: #007BFF; text-decoration: none; font-weight: bold;">VIEW DOCTOR</a>
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin -- Approve Hospital</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+        }
+        header {
+            padding: 20px;
+            text-align: center;
+            background-color: #007bff;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .card {
+            background: linear-gradient(to bottom right, #ffffff, #f9f9f9);
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 320px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        .card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .card h3 {
+            margin: 0 0 10px;
+            color: #007BFF;
+            font-size: 1.5em;
+            text-align: center;
+        }
+        .manage-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .manage-links a {
+            text-decoration: none;
+            color: #007BFF;
+            padding: 8px 12px;
+            border: 1px solid #007BFF;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .manage-links a:hover {
+            background-color: #007BFF;
+            color: white;
+        }
+        .no-hospital {
+            text-align: center;
+            font-weight: bold;
+            color: #ff0000;
+        }
+        input[type="text"] {
+            padding: 10px;
+            margin: 10px 0;
+            width: calc(95% - 20px);
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Approve or Reject Hospitals</h1>
+    </header>
+    <form id="form1" name="form1" method="post" action="{% url 'search_hospital' %}">
+        {% csrf_token %}
+        <input type="text" name="textfield" id="hospital-search" value="{{ search_query }}" placeholder="Search by Name" />
+        <input type="submit" name="Submit" value="SEARCH" />
+    </form>
+
+    <div class="container">
+        {% if hospital_details %}
+            {% for i in hospital_details %}
+            <div class="card">
+                <img src="{{ i.photo.url }}" alt="Hospital Image">
+                <h3>{{ i.NAME }}</h3>
+                <p><strong>Place:</strong> {{ i.PLACE }}</p>
+                <p><strong>Post:</strong> {{ i.POST }}</p>
+                <p><strong>PIN:</strong> {{ i.PIN }}</p>
+                <p><strong>Phone:</strong> {{ i.PHONE }}</p>
+                <p><strong>E-Mail:</strong> {{ i.EMAIL }}</p>
+                <div class="manage-links">
+                    {% if i.LOGINID %}
+                        {% if i.LOGINID.type == 'pending' %}
+                            <a href="{% url 'accept_hospital' i.LOGINID.id %}">ACCEPT</a>
+                            <a href="{% url 'reject' i.LOGINID.id %}">REJECT</a>
+                        {% elif i.LOGINID.type == 'hospital' %}
+                            <p>Accepted</p>
+                        {% elif i.LOGINID.type == 'rejected' %}
+                            <p>Rejected</p>
+                        {% elif i.LOGINID.type == 'blocked' %}
+                            <p>Blocked</p>
+                        {% endif %}
+                    {% else %}
+                        <p>No LOGINID available</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-hospital">No Hospital found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

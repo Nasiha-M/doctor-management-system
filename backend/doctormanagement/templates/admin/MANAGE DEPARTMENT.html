@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin -- Manage Departments</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            background-color: #f4f7f8;
+            color: #333;
+            width: 100%;
+        }
+        header {
+            padding: 20px;
+            text-align: center;
+            background-color: #007bff;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin: 15px;
+            padding: 20px;
+            width: 300px;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-header {
+            font-size: 1.5em;
+            margin: 0;
+            color: #007bff;
+        }
+        .card-details {
+            margin: 10px 0;
+            font-size: 1em;
+            color: #555;
+        }
+        .button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        .add-button {
+            background-color: #007bff;
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+        }
+        .add-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Manage Departments</h1>
+    </header>
+    <form id="form1" name="form1" method="post" action="">
+        <div class="card-container">
+            {% for i in values %}
+            <div class="card">
+                <h2 class="card-header">{{ i.Name }}</h2>
+                <p class="card-details">{{ i.Details }}</p>
+                <a href="delete_department/{{ i.id }}" class="button">DELETE</a>
+            </div>
+            {% endfor %}
+        </div>
+        <a href="/add_department" class="button add-button">ADD NEW DEPARTMENT</a>
+    </form>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>Admin -- View Doctor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            color: #333;
+        }
+        .search-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 5px;
+        }
+        input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .card {
+            background: linear-gradient(to bottom right, #ffffff, #f8f9fa);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .card h3 {
+            margin: 0 0 10px;
+            color: #007BFF;
+        }
+        .card p {
+            margin: 5px 0;
+        }
+        .no-doctors {
+            text-align: center;
+            font-weight: bold;
+            color: #ff0000;
+        }
+        .view-rating {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Doctors</h1>
+    </div>
+
+    <div class="search-container">
+        <form id="form1" name="form1" method="get" action="{% url 'search_department' %}">
+            <input type="text" placeholder="Search by Department" id="department-search" name="textfield" value="{{ search_query }}" />
+            <input type="submit" name="Submit" value="SEARCH" />
+        </form>
+    </div>
+
+    <div class="container">
+        {% if values %}
+            {% for i in values %}
+            <div class="card">
+                <h3>{{ i.Name }}</h3>
+                <p><strong>Age:</strong> {{ i.Age }}</p>
+                <p><strong>Department:</strong> {{ i.DepartmentID.Name }}</p>
+                <p><strong>Experience:</strong> {{ i.Experience }} years</p>
+                <p><strong>Phone:</strong> {{ i.PHONE }}</p>
+                <p><strong>Email:</strong> {{ i.EMAIL }}</p>
+                <div class="view-rating">
+                    <a href="{% url 'view_rating' doctor_id=i.id %}" style="color: #007BFF; text-decoration: none;">VIEW RATING</a>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+        <div class="no-doctors">No doctors found.</div>
+        {% endif %}
+    </div>
+</body>
+</html>

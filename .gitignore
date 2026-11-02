@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+env/
+.venv/
+.idea/
+*.sqlite3
+
+# Django
+.env
+*.log
+
+# Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+.flutter-plugins-dependencies
+
+# IDE
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Sensitive files
+*.pem
+*.key
+secrets/
+
+# Django uploaded media (patient files)
+backend/doctormanagement/media/
+
+# Flutter and Android local files
+**/local.properties
+**/key.properties
+*.jks
+*.keystore
+
+# iOS generated files
+**/Pods/
+**/DerivedData/
+**/xcuserdata/
+
+# Local databases
+*.db
+*.sqlite

@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Doctor/View Booking</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: white;
+    }
+
+    h1 {
+        text-align: center;
+        color: #4CAF50;
+        margin-bottom: 30px;
+        font-size: 28px;
+    }
+
+    table {
+        width: 100%;
+        font-size: 16px;
+        border-collapse: collapse;
+        margin-top: 30px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #007bff;
+        color: #333;
+    }
+
+    tr:nth-child(even) {
+        background-color: #fafafa;
+    }
+
+    tr:hover {
+        background-color: #f0f0f0;
+        cursor: pointer;
+    }
+
+    .status-prescribed {
+        color: #28a745;
+    }
+
+    .status-pending {
+        color: #ff9900;
+    }
+
+    .action-link {
+        text-decoration: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        color: #fff;
+    }
+
+    .view-prescription {
+        background-color: #007bff;
+    }
+
+    .view-prescription:hover {
+        background-color: #0056b3;
+    }
+
+    .prescription-link {
+        background-color: #28a745;
+    }
+
+    .prescription-link:hover {
+        background-color: #218838;
+    }
+
+</style>
+</head>
+
+<body>
+<div class="container">
+    <h1>View Booking</h1>
+    <form id="form1" name="form1" method="post" action="">
+        <table>
+            <tr>
+                <th>USERNAME</th>
+                <th>SCHEDULE</th>
+                <th>DATE</th>
+                <th>STATUS</th>
+                <th>ACTION</th>
+            </tr>
+            {% for i in values %}
+            <tr>
+                <td>{{ i.UserID.Name }}</td>
+                <td>{{ i.ScheduleId.FromTime }}</td>
+                <td>{{ i.ScheduleId.Date }}</td>
+                <td class="{% if i.Status == 'Prescribed' %}status-prescribed{% else %}status-pending{% endif %}">{{ i.Status }}</td>
+                <td>
+                    {% if i.Status == "Prescribed" %}
+                    <a href="{% url 'view_prescription' %}" class="action-link view-prescription">View Prescription</a>
+                    {% else %}
+                    <a href="{% url 'prescription_interface' i.id %}" class="action-link prescription-link">PRESCRIPTION</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+</div>
+</body>
+</html>

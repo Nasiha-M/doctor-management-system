@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital / Manage Doctor</title>
+  <style>
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Title Styles */
+    h1 {
+      text-align: center;
+      color: #28a745; /* Green text color */
+      padding: 20px;
+    }
+
+    /* Form Styles */
+    form {
+      width: 100%;
+      margin: 20px auto;
+      background: white;
+      padding: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group input[type="text"] {
+      width: 92%;
+      padding: 12px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-group input[type="submit"] {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .form-group input[type="submit"]:hover {
+      background-color: #2980b9;
+    }
+
+    /* Table Styles */
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    td img {
+      max-width: 100px; /* Limit the width */
+      height: 100px; /* Fix the height */
+      border-radius: 50%; /* Make the image circular */
+    }
+
+    td a {
+      color: #3498db;
+      text-decoration: none;
+    }
+
+    td a:hover {
+      text-decoration: underline;
+    }
+
+    /* Media Queries for Responsiveness */
+    @media (max-width: 1024px) {
+      form {
+        width: 90%;
+      }
+      table {
+        font-size: 14px;
+      }
+      th, td {
+        padding: 12px;
+      }
+      .form-group input[type="submit"] {
+        font-size: 14px;
+        padding: 10px 16px;
+      }
+    }
+
+    /* Mobile-first Styles */
+    @media (max-width: 768px) {
+      table, form {
+        width: 95%;
+      }
+      th, td {
+        font-size: 12px;
+        padding: 10px;
+      }
+      .form-group input[type="text"], .form-group input[type="submit"] {
+        font-size: 14px;
+        padding: 10px;
+      }
+      td {
+        display: block;
+        text-align: right;
+        border: none;
+      }
+      td:first-child {
+        text-align: left;
+        font-weight: bold;
+      }
+      td img {
+        max-width: 80px;
+        height: 80px;
+      }
+      td a {
+        display: block;
+        margin-top: 5px;
+      }
+      td a:hover {
+        color: #2c3e50;
+      }
+    }
+
+    /* Very Small Screens */
+    @media (max-width: 480px) {
+      .form-group input[type="text"], .form-group input[type="submit"] {
+        font-size: 12px;
+        padding: 8px;
+      }
+      th, td {
+        font-size: 12px;
+        padding: 8px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+
+
+  <form id="form1" name="form1" method="post" action="{% url 'search_doctor' %}">
+   <h1>Manage Doctor</h1>
+    <div class="form-group">
+      <input type="text" name="textfield" value="{{ search_query }}" placeholder="Search by Doctor Name..." />
+      <input type="submit" name="Submit" value="SEARCH" />
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>NAME</th>
+          <th>DEPARTMENT</th>
+          <th>AGE</th>
+          <th>EXPERIENCE</th>
+          <th>PHONE</th>
+          <th>E-MAIL</th>
+          <th>PHOTO</th>
+          <th>ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if val %}
+          {% for i in val %}
+            <tr>
+              <td>{{ i.Name }}</td>
+              <td>{{ i.DepartmentID.Name }}</td>
+              <td>{{ i.Age }}</td>
+              <td>{{ i.Experience }}</td>
+              <td>{{ i.PHONE }}</td>
+              <td>{{ i.EMAIL }}</td>
+              <td><img src="{{ i.photo.url }}" alt="Doctor Photo"></td>
+              <td>
+                <a href="edit_doctor/{{ i.id }}">EDIT</a> |
+                <a href="delete_doctor/{{ i.id }}">DELETE</a>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="8" class="text-center">No Doctor Found.</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+
+    <div class="form-group" style="text-align: center; margin-top: 20px;">
+      <a href="add_doctor" style="background-color: #28a745; color: white; padding: 12px 20px; font-size: 16px; border-radius: 5px; text-decoration: none;">ADD NEW DOCTOR</a>
+    </div>
+  </form>
+
+</body>
+</html>

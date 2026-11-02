@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor/Prescription Interface</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        /* Form Container */
+        .form-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 500px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 26px;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 12px;
+            text-align: left;
+            font-size: 16px;
+        }
+
+        td:first-child {
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            background-color: #f9f9f9;
+        }
+
+        input[type="text"]:focus, input[type="file"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        /* Submit Button Styling */
+        input[type="submit"] {
+            padding: 12px 25px;
+            font-size: 18px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .submit-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* Label Styling */
+        label {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .form-container input[type="submit"]:active {
+            background-color: #004085;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h1>Add Prescription</h1>
+        <form id="form1" name="form1" enctype="multipart/form-data" method="post" action="{% url 'prescription_interface_post' %}">
+            <table>
+                <tr>
+                    <td><label for="prescription">Prescription</label></td>
+                    <td><input type="text" id="prescription" name="prescription" required pattern="[A-Za-z. ]{3,25}" /></td>
+                </tr>
+                <tr>
+                    <td><label for="file">File</label></td>
+                    <td><input type="file" id="file" name="file" required /></td>
+                </tr>
+                <tr>
+                    <td><label for="report">Report</label></td>
+                    <td><input type="text" id="report" name="report" required pattern="[A-Za-z. ]{3,25}" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="submit-container">
+                            <input type="submit" name="Submit" value="ADD" />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital / Edit Doctor</title>
+  <style>
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    h1 {
+       text-align: center;
+       color: #27ae60; /* Green color */
+       background-color: white; /* White background */
+       padding: 10px 0; /* Optional: Adds some padding to the background */
+   }
+
+    /* Form Styles */
+    form {
+      width: 90%;
+      max-width: 600px;
+      margin: 20px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .form-group input[type="text"],
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-group input[type="submit"] {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 100%;
+    }
+
+    .form-group input[type="submit"]:hover {
+      background-color: #2980b9;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 1024px) {
+      form {
+        width: 90%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 24px;
+      }
+      form {
+        width: 95%;
+      }
+      .form-group input[type="text"],
+      .form-group select {
+        font-size: 14px;
+        padding: 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .form-group input[type="submit"] {
+        font-size: 14px;
+        padding: 10px 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+
+
+  <form id="form1" name="form1" method="post" action="/edit_doctor_post" enctype="multipart/form-data">
+  <h1>Edit Doctor Details</h1>
+    <div class="form-group">
+      <label for="name">NAME</label>
+      <input type="text" id="name" name="name" value="{{ values.Name }}" required pattern="[A-Z a-z.]{3,25}" placeholder="Enter Name" />
+    </div>
+
+    <div class="form-group">
+      <label for="hospitalname">HOSPITAL NAME</label>
+      <input type="text" id="hospitalname" name="hospitalname" value="{{ values.HospitalID.NAME }}" required pattern="[A-Z a-z.]{3,25}" placeholder="Enter Hospital Name" />
+    </div>
+
+    <div class="form-group">
+      <label for="department">DEPARTMENT</label>
+      <select id="department" name="department">
+        <option value="">Select a department</option>
+        {% for department in value %}
+          <option value="{{ department.id }}" {% if department.id == values.DepartmentID.id %}selected{% endif %}>{{ department.Name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="age">AGE</label>
+      <input type="text" id="age" name="age" value="{{ values.Age }}" required placeholder="Enter Age" />
+    </div>
+
+    <div class="form-group">
+      <label for="experience">EXPERIENCE</label>
+      <input type="text" id="experience" name="experience" value="{{ values.Experience }}" required placeholder="Enter Experience" />
+    </div>
+
+    <div class="form-group">
+      <label for="phone">PHONE</label>
+      <input type="text" id="phone" name="phone" value="{{ values.PHONE }}" required pattern="[6789][0-9]{9}" placeholder="Enter Phone Number" />
+    </div>
+
+    <div class="form-group">
+      <label for="email">E-MAIL</label>
+      <input type="text" id="email" name="email" value="{{ values.EMAIL }}" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}" placeholder="Enter Email Address" />
+    </div>
+
+    <div class="form-group">
+      <input type="submit" name="Submit" value="SAVE" />
+    </div>
+  </form>
+
+</body>
+</html>

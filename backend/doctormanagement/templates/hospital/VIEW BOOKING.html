@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>Hospital Booking Management</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-top: 20px;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+        }
+        .search-bar {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .search-bar input[type="date"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 180px;
+        }
+        .search-bar input[type="submit"] {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .search-bar input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        td {
+            color: #555;
+            font-size: 14px;
+        }
+        .action-buttons a {
+            background-color: #28a745;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            text-align: center;
+            margin-right: 10px;
+        }
+        .action-buttons a.reject {
+            background-color: #dc3545;
+        }
+        .action-buttons a:hover {
+            opacity: 0.8;
+        }
+        .no-booking {
+            text-align: center;
+            color: #777;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Hospital Booking Management</h1>
+
+    <form id="form1" name="form1" method="post" action="{% url 'search_booking_date' %}">
+        <div class="search-bar">
+            <label for="date">Select Date: </label>
+            <input type="date" name="textfield" id="date" required />
+            <input type="submit" name="Submit" value="SEARCH" />
+        </div>
+
+        {% if values %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Doctor Name</th>
+                    <th>Username</th>
+                    <th>Date</th>
+                    <th>Schedule</th>
+                    <th>Status</th>
+                    {% if values|length and values.0.Status == 'pending' %}
+                        <th>Action</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in values %}
+                    <tr>
+                        <td>{{ i.ScheduleId.DoctorID.Name }}</td>
+                        <td>{{ i.UserID.Name }}</td>
+                        <td>{{ i.Date }}</td>
+                        <td>{{ i.ScheduleId.Date }} ; {{ i.ScheduleId.FromTime }}</td>
+                        <td>{{ i.Status }}</td>
+
+                        {% if i.Status == 'pending' %}
+                        <td class="action-buttons">
+                            <a href="{% url 'accept_booking' i.id %}">Accept</a>
+                            <a href="{% url 'reject_booking' i.id %}" class="reject">Reject</a>
+                        </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="no-booking">
+            No Booking Found On The Given Date.
+        </div>
+        {% endif %}
+    </form>
+</div>
+
+</body>
+</html>

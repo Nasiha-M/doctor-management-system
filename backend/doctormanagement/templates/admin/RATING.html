@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin -- View Ratings</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+        .ratings-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 700px;
+            margin-top: 20px;
+        }
+        .rating-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            margin-bottom: 15px;
+            transition: transform 0.2s;
+        }
+        .rating-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .rating-card h3 {
+            margin: 0 0 10px;
+            color: #007BFF;
+            font-size: 1.5em;
+        }
+        .rating-card p {
+            margin: 5px 0;
+            color: #495057;
+            font-size: 1em;
+        }
+        .no-ratings {
+            text-align: center;
+            font-weight: bold;
+            color: #dc3545;
+            font-size: 1.2em;
+        }
+        @media (max-width: 600px) {
+            .rating-card h3 {
+                font-size: 1.3em;
+            }
+            .no-ratings {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Ratings for Doctor</h1>
+    <div class="ratings-container">
+        {% if values %}
+            {% for rating in values %}
+            <div class="rating-card">
+                <h3>Rating: {{ rating.Rating }}</h3>
+                <p><strong>Date:</strong> {{ rating.Date }}</p>
+                <p><strong>User Name:</strong> {{ rating.UserID.Name }}</p>
+            </div>
+            {% endfor %}
+        {% else %}
+        <div class="no-ratings">No ratings found for this doctor.</div>
+        {% endif %}
+    </div>
+</body>
+</html>

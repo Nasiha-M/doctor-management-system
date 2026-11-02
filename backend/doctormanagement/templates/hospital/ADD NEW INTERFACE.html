@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Schedule - Hospital</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td {
+            padding: 12px;
+            text-align: left;
+        }
+        td:first-child {
+            width: 30%;
+            font-weight: bold;
+        }
+        select, input[type="time"], input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        select:focus, input[type="time"]:focus, input[type="date"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        input[type="submit"] {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Add Schedule</h1>
+    <form id="form1" name="form1" method="post" action="add_schedule_post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="DoctorID">Doctor</label>
+            <select name="DoctorID" id="DoctorID" required>
+                <option value="">Select a doctor</option>
+                {% for doctor in doctors %}
+                    <option value="{{ doctor.id }}">{{ doctor.Name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="FromTime">From Time</label>
+            <input type="time" name="FromTime" id="FromTime" required />
+        </div>
+        <div class="form-group">
+            <label for="ToTime">To Time</label>
+            <input type="time" name="ToTime" id="ToTime" required />
+        </div>
+        <div class="form-group">
+            <label for="Date">Date</label>
+            <input type="date" name="Date" id="Date" required />
+        </div>
+        <input type="submit" value="Add Schedule" />
+    </form>
+</div>
+
+</body>
+</html>

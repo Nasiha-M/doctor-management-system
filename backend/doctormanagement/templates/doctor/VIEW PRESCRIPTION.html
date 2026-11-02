@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>Doctor/View Prescription</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: white;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #333;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        .view-file {
+            text-decoration: none;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .view-file:hover {
+            background-color: #0056b3;
+        }
+
+        .no-prescriptions {
+            text-align: center;
+            font-size: 18px;
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Prescription</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>PRESCRIPTION</th>
+                    <th>FILE</th>
+                    <th>REPORT</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for prescription in values %}
+                    <tr>
+                        <td>{{ prescription.Prescription }}</td>
+                        <td>
+                            {% if prescription.File %}
+                                <a href="{{ prescription.File.url }}" class="view-file" target="_blank">View File</a>
+                            {% else %}
+                                <p>No file uploaded</p>
+                            {% endif %}
+                        </td>
+                        <td>{{ prescription.Report }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3" class="no-prescriptions">No prescriptions found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
